@@ -182,6 +182,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 15,
+    paddingTop: 45,
   },
   rightHeader: {
     flexDirection: 'row',

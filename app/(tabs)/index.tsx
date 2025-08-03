@@ -8,7 +8,8 @@ import {
   SafeAreaView,
   Dimensions,
   ImageBackground,
-  Animated
+  Animated,
+  Share
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialIcons, Feather } from '@expo/vector-icons';
@@ -17,6 +18,8 @@ const { width } = Dimensions.get('window');
 
 const RadioScreen = () => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
   const [animationValues] = useState(
     Array.from({ length: 40 }, () => new Animated.Value(Math.random() * 30 + 4))
   );
@@ -56,12 +59,50 @@ const RadioScreen = () => {
 
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying);
+    console.log(isPlaying ? 'Pausando radio...' : 'Reproduciendo radio...');
+    // Aquí puedes agregar la lógica para conectar/desconectar el stream de audio
   };
 
-  const audioLevels = [
-    4, 8, 6, 12, 10, 15, 8, 18, 14, 20, 16, 22, 12, 25, 18, 28, 20, 24, 16, 30,
-    26, 22, 18, 14, 10, 16, 20, 24, 18, 12, 8, 6, 10, 14, 18, 22, 16, 12, 8, 4
-  ];
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+    console.log(isMuted ? 'Audio activado' : 'Audio silenciado');
+    // Aquí puedes agregar la lógica para silenciar/activar el audio
+  };
+
+  const toggleLike = () => {
+    setIsLiked(!isLiked);
+    console.log(isLiked ? 'Like removido' : 'Like agregado');
+    // Aquí puedes agregar la lógica para guardar el like en preferencias
+  };
+
+  const handleShare = async () => {
+    try {
+      const result = await Share.share({
+        message: '¡Escucha Radio UPEA en vivo! Tu radio favorita en línea - FM 100.0',
+        title: 'Radio UPEA',
+        url: 'https://radioupea.com', // Reemplaza con tu URL real
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          console.log('Compartido via:', result.activityType);
+        } else {
+          console.log('Compartido exitosamente');
+        }
+      } else if (result.action === Share.dismissedAction) {
+        console.log('Compartir cancelado');
+      }
+    } catch (error) {
+      console.error('Error al compartir:', error);
+    }
+  };
+
+  // Usar los valores animados para el visualizador
+  const audioLevels = animationValues.map((animValue, index) => ({
+    animValue,
+    staticHeight: [4, 8, 6, 12, 10, 15, 8, 18, 14, 20, 16, 22, 12, 25, 18, 28, 20, 24, 16, 30,
+      26, 22, 18, 14, 10, 16, 20, 24, 18, 12, 8, 6, 10, 14, 18, 22, 16, 12, 8, 4][index] || 4
+  }));
 
   return (
     <SafeAreaView style={styles.container}>
@@ -73,7 +114,7 @@ const RadioScreen = () => {
           <View style={styles.liveIndicator} />
           <Text style={styles.liveText}>LIVE</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleShare} activeOpacity={0.7}>
           <Feather name="share" size={24} color="#333" />
         </TouchableOpacity>
       </View>
@@ -83,11 +124,9 @@ const RadioScreen = () => {
         <ImageBackground
           source={require('../../assets/images/radioupea.png')}
           style={styles.card}
-          imageStyle={{ borderRadius: 24 }}
-          resizeMode="contain"
+          imageStyle={{ borderRadius: 15 }}
+          resizeMode="cover"
         >
-
-
           {/* Sound waves */}
           <View style={styles.soundWaves}>
             {[...Array(5)].map((_, i) => (
@@ -98,33 +137,63 @@ const RadioScreen = () => {
                   {
                     width: 60 + i * 20,
                     height: 60 + i * 20,
-                    opacity: 0.3 - i * 0.05,
+                    opacity: isPlaying ? 0.3 - i * 0.05 : 0.1,
                   }
                 ]}
               />
             ))}
           </View>
         </ImageBackground>
-
       </View>
+
       {/* Live Badge */}
       <View style={styles.liveBadge}>
         <Text style={styles.liveBadgeText}>LIVE</Text>
       </View>
 
-
       {/* Controls */}
       <View style={styles.controls}>
-        <TouchableOpacity style={styles.controlButton}>
-          <MaterialIcons name="volume-off" size={28} color="#333" />
+        <TouchableOpacity 
+          style={[
+            styles.controlButton,
+            isMuted && { backgroundColor: '#FF4444' }
+          ]}
+          onPress={toggleMute}
+          activeOpacity={0.7}
+        >
+          <MaterialIcons 
+            name={isMuted ? "volume-off" : "volume-up"} 
+            size={28} 
+            color={isMuted ? "white" : "#333"} 
+          />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.playButton}>
-          <Ionicons name="play" size={32} color="white" />
+        <TouchableOpacity 
+          style={styles.playButton}
+          onPress={togglePlayPause}
+          activeOpacity={0.8}
+        >
+          <Ionicons 
+            name={isPlaying ? "pause" : "play"} 
+            size={32} 
+            color="white"
+            style={!isPlaying && { paddingLeft: 4 }}
+          />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.controlButton}>
-          <MaterialIcons name="thumb-up" size={28} color="#333" />
+        <TouchableOpacity 
+          style={[
+            styles.controlButton,
+            isLiked && { backgroundColor: '#FF4444' }
+          ]}
+          onPress={toggleLike}
+          activeOpacity={0.7}
+        >
+          <MaterialIcons 
+            name={isLiked ? "thumb-up" : "thumb-up-off-alt"} 
+            size={28} 
+            color={isLiked ? "white" : "#333"} 
+          />
         </TouchableOpacity>
       </View>
 
@@ -133,21 +202,21 @@ const RadioScreen = () => {
 
       {/* Audio Visualizer */}
       <View style={styles.visualizer}>
-        {audioLevels.map((level, index) => (
-          <View
+        {audioLevels.map((item, index) => (
+          <Animated.View
             key={index}
             style={[
               styles.audioBar,
               {
-                height: level,
-                backgroundColor: `hsl(${(index * 9) % 360}, 70%, 60%)`,
+                height: isPlaying ? item.animValue : item.staticHeight,
+                backgroundColor: isPlaying 
+                  ? `hsl(${(index * 9) % 360}, 70%, 60%)`
+                  : '#e0e0e0',
               }
             ]}
           />
         ))}
       </View>
-
-
     </SafeAreaView>
   );
 };
@@ -184,20 +253,20 @@ const styles = StyleSheet.create({
   cardContainer: {
     marginHorizontal: 40,
     marginBottom: 0,
-    marginTop: 40, // 👈 bajamos más la imagen
-    position: 'relative',
-  },
-  card: {
-    borderRadius: 24,
-    padding: 50,
+    marginTop: 40,
+    padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 340, // 👈 aumentamos tamaño de imagen
-    position: 'relative',
-    overflow: 'hidden',
   },
-
-
+  card: {
+    width: 300,
+    height: 300,
+    padding: 50,
+    borderRadius: 24,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   radioTitle: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -276,17 +345,15 @@ const styles = StyleSheet.create({
     transform: [{ translateX: -0.5 }, { translateY: -0.5 }],
   },
   liveBadge: {
-    // elimina position absolute
     backgroundColor: '#FF4444',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 4,
-    alignSelf: 'flex-end', // para que quede a la derecha debajo de la imagen
-    marginRight: 50,        // igual que margen horizontal del contenedor
+    alignSelf: 'flex-end',
+    marginRight: 50,
     marginTop: 8,
-    marginBottom: 20,          // espacio arriba del texto LIVE
+    marginBottom: 20,
   },
-
   liveBadgeText: {
     color: 'white',
     fontSize: 12,
@@ -314,7 +381,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#003070',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingLeft: 4,
   },
   frequency: {
     fontSize: 24,
@@ -344,7 +410,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 20,
   },
-
 });
 
 export default RadioScreen;
