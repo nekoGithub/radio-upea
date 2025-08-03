@@ -27,7 +27,7 @@ const RadioScreen = () => {
   // Animación del visualizador
   useEffect(() => {
     let interval: number | null = null;
-    
+
     if (isPlaying) {
       interval = setInterval(() => {
         animationValues.forEach((animValue, index) => {
@@ -66,7 +66,7 @@ const RadioScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
-      
+
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.liveContainer}>
@@ -79,33 +79,34 @@ const RadioScreen = () => {
       </View>
 
       {/* Main Card */}
-    <View style={styles.cardContainer}>
-      <ImageBackground
-        source={require('../../assets/images/radioupea.png')}
-        style={styles.card}
-        imageStyle={styles.cardImage}
-      >
+      <View style={styles.cardContainer}>
+        <ImageBackground
+          source={require('../../assets/images/radioupea.png')}
+          style={styles.card}
+          imageStyle={{ borderRadius: 24 }}
+          resizeMode="contain"
+        >
 
 
-        {/* Sound waves */}
-        <View style={styles.soundWaves}>
-          {[...Array(5)].map((_, i) => (
-            <View
-              key={i}
-              style={[
-                styles.soundWave,
-                {
-                  width: 60 + i * 20,
-                  height: 60 + i * 20,
-                  opacity: 0.3 - i * 0.05,
-                }
-              ]}
-            />
-          ))}
-        </View>
-      </ImageBackground>
+          {/* Sound waves */}
+          <View style={styles.soundWaves}>
+            {[...Array(5)].map((_, i) => (
+              <View
+                key={i}
+                style={[
+                  styles.soundWave,
+                  {
+                    width: 60 + i * 20,
+                    height: 60 + i * 20,
+                    opacity: 0.3 - i * 0.05,
+                  }
+                ]}
+              />
+            ))}
+          </View>
+        </ImageBackground>
 
-    </View>
+      </View>
       {/* Live Badge */}
       <View style={styles.liveBadge}>
         <Text style={styles.liveBadgeText}>LIVE</Text>
@@ -117,11 +118,11 @@ const RadioScreen = () => {
         <TouchableOpacity style={styles.controlButton}>
           <MaterialIcons name="volume-off" size={28} color="#333" />
         </TouchableOpacity>
-        
+
         <TouchableOpacity style={styles.playButton}>
           <Ionicons name="play" size={32} color="white" />
         </TouchableOpacity>
-        
+
         <TouchableOpacity style={styles.controlButton}>
           <MaterialIcons name="thumb-up" size={28} color="#333" />
         </TouchableOpacity>
@@ -181,24 +182,21 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   cardContainer: {
-      marginHorizontal: 40,
-      marginBottom: 0,
-      marginTop: 40, // 👈 bajamos más la imagen
-      position: 'relative',
-    },
-    card: {
-      borderRadius: 24,
-      padding: 50,
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: 340, // 👈 aumentamos tamaño de imagen
-      position: 'relative',
-      overflow: 'hidden',
-    },
-    cardImage: {
-      borderRadius: 24,
-      resizeMode: 'cover', // 👈 se adapta mejor
-    },
+    marginHorizontal: 40,
+    marginBottom: 0,
+    marginTop: 40, // 👈 bajamos más la imagen
+    position: 'relative',
+  },
+  card: {
+    borderRadius: 24,
+    padding: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 340, // 👈 aumentamos tamaño de imagen
+    position: 'relative',
+    overflow: 'hidden',
+  },
+
 
   radioTitle: {
     fontSize: 28,
@@ -285,7 +283,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     alignSelf: 'flex-end', // para que quede a la derecha debajo de la imagen
     marginRight: 50,        // igual que margen horizontal del contenedor
-    marginTop: 8, 
+    marginTop: 8,
     marginBottom: 20,          // espacio arriba del texto LIVE
   },
 
