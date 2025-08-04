@@ -47,7 +47,7 @@ const InformacionScreen: React.FC = () => {
           <View style={styles.versionSection}>
             <Text style={styles.versionLabel}>Versión actual</Text>
             <View style={styles.versionBadge}>
-              <Text style={styles.versionValue}>v1.0</Text>
+              <Text style={styles.versionValue}>v2.0.0</Text>
             </View>
           </View>
 
