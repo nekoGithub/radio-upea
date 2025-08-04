@@ -7,6 +7,8 @@ import {
   Linking,
   ScrollView,
   Image,
+  SafeAreaView,
+  StatusBar,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -25,206 +27,306 @@ const InformacionScreen: React.FC = () => {
   };
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Información</Text>
-      </View>
-
-      {/* Version Info */}
-      <View style={styles.infoSection}>
-        <View style={styles.infoRow}>
-          <Text style={styles.infoLabel}>Versión</Text>
-          <Text style={styles.infoValue}>v1.0</Text>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#f8f9fa" />
+      
+      <ScrollView 
+        style={styles.scrollView} 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Información</Text>
+          <Text style={styles.headerSubtitle}>Radio UPEA</Text>
         </View>
 
-        {/* Radio UPEA Section */}
-        <View style={styles.radioSection}>
-          <View style={styles.logoContainer}>
-            <View style={styles.logoCircle}>
+        {/* Main Card */}
+        <View style={styles.mainCard}>
+          {/* Version Info */}
+          <View style={styles.versionSection}>
+            <Text style={styles.versionLabel}>Versión actual</Text>
+            <View style={styles.versionBadge}>
+              <Text style={styles.versionValue}>v1.0</Text>
+            </View>
+          </View>
+
+          {/* Radio UPEA Section */}
+          <View style={styles.radioSection}>
+            <View style={styles.logoContainer}>
               <Image
                 source={require('../../assets/images/logo.jpg')}
                 style={styles.logoImage}
-                resizeMode="contain"
+                resizeMode="cover"
               />
             </View>
+            <View style={styles.radioInfo}>
+              <Text style={styles.radioTitle}>Radio UPEA</Text>
+              <Text style={styles.radioSubtitle}>Tu radio favorita en línea</Text>
+            </View>
           </View>
-          <View style={styles.radioInfo}>
-            <Text style={styles.radioTitle}>Radio UPEA</Text>
-            <Text style={styles.radioSubtitle}>Tu radio favorita en línea</Text>
+
+          {/* Menu Options */}
+          <View style={styles.menuSection}>
+            <Text style={styles.sectionTitle}>Configuración</Text>
+            
+            <TouchableOpacity 
+              style={styles.menuItem}
+              onPress={() => handleMenuPress('Términos de servicio')}
+            >
+              <View style={styles.menuItemLeft}>
+                <View style={[styles.menuIcon, { backgroundColor: '#007AFF20' }]}>
+                  <Ionicons name="document-text" size={20} color="#007AFF" />
+                </View>
+                <Text style={styles.menuItemText}>Términos de servicio</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={20} color="#666" />
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.menuItem}
+              onPress={() => handleMenuPress('Política de privacidad')}
+            >
+              <View style={styles.menuItemLeft}>
+                <View style={[styles.menuIcon, { backgroundColor: '#34C75920' }]}>
+                  <Ionicons name="shield-checkmark" size={20} color="#34C759" />
+                </View>
+                <Text style={styles.menuItemText}>Política de privacidad</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={20} color="#666" />
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style={styles.menuItem}
+              onPress={() => handleMenuPress('Contacto')}
+            >
+              <View style={styles.menuItemLeft}>
+                <View style={[styles.menuIcon, { backgroundColor: '#FF951520' }]}>
+                  <Ionicons name="mail" size={20} color="#FF9515" />
+                </View>
+                <Text style={styles.menuItemText}>Contacto</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={20} color="#666" />
+            </TouchableOpacity>
           </View>
         </View>
 
-        {/* Menu Options */}
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => handleMenuPress('Términos de servicio')}
-        >
-          <Text style={styles.menuItemText}>Términos de servicio</Text>
-          <Ionicons name="chevron-forward" size={20} color="#666" />
-        </TouchableOpacity>
+        {/* Social Media Section */}
+        <View style={styles.socialCard}>
+          <Text style={styles.socialTitle}>Síguenos en redes sociales</Text>
+          
+          <TouchableOpacity 
+            style={[styles.socialButton, styles.youtubeButton]}
+            onPress={() => handleSocialMediaPress('https://youtube.com/@radioupea')}
+          >
+            <Ionicons name="logo-youtube" size={24} color="white" />
+            <Text style={[styles.socialButtonText, styles.whiteText]}>YouTube</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => handleMenuPress('Política de privacidad')}
-        >
-          <Text style={styles.menuItemText}>Política de privacidad</Text>
-          <Ionicons name="chevron-forward" size={20} color="#666" />
-        </TouchableOpacity>
+          <TouchableOpacity 
+            style={[styles.socialButton, styles.facebookButton]}
+            onPress={() => handleSocialMediaPress('https://facebook.com/radioupea')}
+          >
+            <Ionicons name="logo-facebook" size={24} color="white" />
+            <Text style={[styles.socialButtonText, styles.whiteText]}>Facebook</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => handleMenuPress('Contacto')}
-        >
-          <Text style={styles.menuItemText}>Contacto</Text>
-          <Ionicons name="chevron-forward" size={20} color="#666" />
-        </TouchableOpacity>
-      </View>
-
-      {/* Social Media Section */}
-      <View style={styles.socialSection}>
-        <Text style={styles.socialTitle}>Redes sociales</Text>
-
-        <TouchableOpacity
-          style={[styles.socialButton, styles.youtubeButton]}
-          onPress={() => handleSocialMediaPress('https://youtube.com/@radioupea')}
-        >
-          <Ionicons name="logo-youtube" size={24} color="white" />
-          <Text style={[styles.socialButtonText, styles.whiteText]}>Youtube</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.socialButton, styles.facebookButton]}
-          onPress={() => handleSocialMediaPress('https://facebook.com/radioupea')}
-        >
-          <Ionicons name="logo-facebook" size={24} color="white" />
-          <Text style={[styles.socialButtonText, styles.whiteText]}>Facebook</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.socialButton, styles.tiktokButton]}
-          onPress={() => handleSocialMediaPress('https://tiktok.com/@radioupea')}
-        >
-          <Ionicons name="logo-tiktok" size={24} color="white" />
-          <Text style={[styles.socialButtonText, styles.whiteText]}>Tik Tok</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+          <TouchableOpacity 
+            style={[styles.socialButton, styles.tiktokButton]}
+            onPress={() => handleSocialMediaPress('https://tiktok.com/@radioupea')}
+          >
+            <Ionicons name="logo-tiktok" size={24} color="white" />
+            <Text style={[styles.socialButtonText, styles.whiteText]}>TikTok</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#f8f9fa',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 20,
   },
   header: {
-    backgroundColor: 'white',
     paddingHorizontal: 20,
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    paddingTop: 45,
-    borderBottomColor: '#e0e0e0',
+    paddingTop: 60,
+    paddingBottom: 20,
+    backgroundColor: 'transparent',
   },
   headerTitle: {
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: 28,
+    fontWeight: '700',
     color: '#333',
+    marginBottom: 2,
   },
-  infoSection: {
+  headerSubtitle: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#666',
+  },
+  mainCard: {
     backgroundColor: 'white',
-    marginTop: 10,
+    marginHorizontal: 20,
+    marginBottom: 16,
+    borderRadius: 20,
+    paddingVertical: 24,
     paddingHorizontal: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 8,
   },
-  infoRow: {
+  versionSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 15,
+    marginBottom: 24,
+    paddingBottom: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
   },
-  infoLabel: {
+  versionLabel: {
     fontSize: 16,
-    color: '#333',
     fontWeight: '500',
+    color: '#333',
   },
-  infoValue: {
-    fontSize: 16,
-    color: '#666',
+  versionBadge: {
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+  },
+  versionValue: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: 'white',
   },
   radioSection: {
     alignItems: 'center',
-    paddingVertical: 30,
+    marginBottom: 24,
+    paddingBottom: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0',
   },
   logoContainer: {
-    marginBottom: 15,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 6,
   },
-  logoCircle: {
+  logoImage: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    overflow: 'hidden',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ccc', // opcional: por si hay un pequeño espacio
-  },
-
-  logoImage: {
-    width: '100%',
-    height: '100%',
   },
   radioInfo: {
     alignItems: 'center',
   },
   radioTitle: {
-    fontSize: 18,
-    fontWeight: '600',
+    fontSize: 20,
+    fontWeight: '700',
     color: '#333',
-    marginBottom: 5,
+    marginBottom: 4,
   },
   radioSubtitle: {
     fontSize: 14,
     color: '#666',
+    fontWeight: '500',
+  },
+  menuSection: {
+    marginBottom: 8,
+  },
+  sectionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 16,
   },
   menuItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    paddingVertical: 12,
+    marginBottom: 8,
+  },
+  menuItemLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  menuIcon: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
   },
   menuItemText: {
     fontSize: 16,
     color: '#333',
+    fontWeight: '500',
   },
-  socialSection: {
+  socialCard: {
     backgroundColor: 'white',
-    marginTop: 10,
+    marginHorizontal: 20,
+    borderRadius: 20,
+    paddingVertical: 24,
     paddingHorizontal: 20,
-    paddingVertical: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 8,
   },
   socialTitle: {
     fontSize: 18,
     fontWeight: '600',
     color: '#333',
     marginBottom: 20,
+    textAlign: 'center',
   },
   socialButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 15,
+    justifyContent: 'center',
+    paddingVertical: 16,
     paddingHorizontal: 20,
-    borderRadius: 25,
-    marginBottom: 10,
+    borderRadius: 16,
+    marginBottom: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
+    elevation: 4,
   },
   socialButtonText: {
     fontSize: 16,
-    fontWeight: '500',
-    marginLeft: 15,
+    fontWeight: '600',
+    marginLeft: 12,
   },
   whiteText: {
     color: 'white',

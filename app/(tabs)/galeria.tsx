@@ -37,37 +37,36 @@ const GaleriaScreen: React.FC = () => {
     },
     {
       id: 2,
-      titulo: "RadioUpea lanza nueva iniciativa comunitaria",
+      titulo: "Nuevo estudio de grabación para estudiantes",
       imagen: "https://i.blogs.es/c7b68e/chatgpt-studio-ghibli-portada/500_333.jpeg",
-      descripcion: "Radio UPEA ha lanzado una nueva iniciativa comunitaria que busca conectar a los estudiantes con la comunidad local a través de programas educativos y culturales.",
-      fechaCompleta: "2 de Agosto, 2025",
-      contenidoCompleto: "Esta nueva iniciativa de Radio UPEA representa un paso importante en el fortalecimiento de los lazos entre la universidad y la comunidad. El programa incluye espacios dedicados a la música local, entrevistas con líderes comunitarios, y segmentos educativos que abordan temas de interés general.\n\nLa directora de Radio UPEA, María González, explicó que 'queremos ser un puente entre el conocimiento académico y las necesidades reales de nuestra comunidad'. El proyecto contará con la participación de estudiantes de diferentes carreras que podrán aplicar sus conocimientos en un entorno real.\n\nLos programas se transmitirán de lunes a viernes en horarios estratégicos para llegar al mayor número de oyentes posible."
+      descripcion: "La universidad inaugura un moderno estudio de grabación equipado con tecnología de última generación para la formación de futuros comunicadores.",
+      fechaCompleta: "1 de Agosto, 2025",
+      contenidoCompleto: "El nuevo estudio de grabación de Radio UPEA marca un hito en la formación académica de los estudiantes de comunicación. Con equipos de última generación y un diseño acústico profesional, este espacio permitirá a los estudiantes desarrollar habilidades técnicas y creativas en un ambiente real de trabajo.\n\nEl estudio cuenta con cabinas de grabación aisladas, mesa de mezclas digital, y software especializado para la producción de contenido radiofónico. Los estudiantes podrán realizar prácticas supervisadas y desarrollar proyectos que posteriormente serán transmitidos en la programación regular de la emisora."
     },
     {
       id: 3,
-      titulo: "RadioUpea lanza nueva iniciativa comunitaria",
+      titulo: "Festival de música local en Radio UPEA",
       imagen: "https://i.blogs.es/c7b68e/chatgpt-studio-ghibli-portada/500_333.jpeg",
-      descripcion: "Radio UPEA ha lanzado una nueva iniciativa comunitaria que busca conectar a los estudiantes con la comunidad local a través de programas educativos y culturales.",
-      fechaCompleta: "2 de Agosto, 2025",
-      contenidoCompleto: "Esta nueva iniciativa de Radio UPEA representa un paso importante en el fortalecimiento de los lazos entre la universidad y la comunidad. El programa incluye espacios dedicados a la música local, entrevistas con líderes comunitarios, y segmentos educativos que abordan temas de interés general.\n\nLa directora de Radio UPEA, María González, explicó que 'queremos ser un puente entre el conocimiento académico y las necesidades reales de nuestra comunidad'. El proyecto contará con la participación de estudiantes de diferentes carreras que podrán aplicar sus conocimientos en un entorno real.\n\nLos programas se transmitirán de lunes a viernes en horarios estratégicos para llegar al mayor número de oyentes posible."
+      descripcion: "Se llevará a cabo el primer festival de música local transmitido en vivo desde los estudios de Radio UPEA con artistas de la región.",
+      fechaCompleta: "31 de Julio, 2025",
+      contenidoCompleto: "Radio UPEA se prepara para presentar el primer Festival de Música Local, un evento que celebrará la riqueza cultural de nuestra región. Durante tres días consecutivos, artistas locales de diferentes géneros musicales se presentarán en vivo desde nuestros estudios.\n\nEl festival incluirá entrevistas exclusivas con los músicos, presentaciones acústicas y la oportunidad para que los oyentes conozcan más sobre la escena musical local. Este evento forma parte de nuestro compromiso de promover el talento regional y crear espacios de expresión cultural."
     },
     {
       id: 4,
-      titulo: "RadioUpea lanza nueva iniciativa comunitaria",
+      titulo: "Capacitación en periodismo digital",
       imagen: "https://i.blogs.es/c7b68e/chatgpt-studio-ghibli-portada/500_333.jpeg",
-      descripcion: "Radio UPEA ha lanzado una nueva iniciativa comunitaria que busca conectar a los estudiantes con la comunidad local a través de programas educativos y culturales.",
-      fechaCompleta: "2 de Agosto, 2025",
-      contenidoCompleto: "Esta nueva iniciativa de Radio UPEA representa un paso importante en el fortalecimiento de los lazos entre la universidad y la comunidad. El programa incluye espacios dedicados a la música local, entrevistas con líderes comunitarios, y segmentos educativos que abordan temas de interés general.\n\nLa directora de Radio UPEA, María González, explicó que 'queremos ser un puente entre el conocimiento académico y las necesidades reales de nuestra comunidad'. El proyecto contará con la participación de estudiantes de diferentes carreras que podrán aplicar sus conocimientos en un entorno real.\n\nLos programas se transmitirán de lunes a viernes en horarios estratégicos para llegar al mayor número de oyentes posible."
+      descripcion: "Radio UPEA ofrece talleres gratuitos de periodismo digital para estudiantes y profesionales interesados en medios de comunicación.",
+      fechaCompleta: "30 de Julio, 2025",
+      contenidoCompleto: "Como parte de nuestro compromiso con la educación continua, Radio UPEA ha organizado una serie de talleres sobre periodismo digital y nuevas tecnologías de comunicación. Estos talleres están dirigidos tanto a estudiantes como a profesionales que deseen actualizar sus conocimientos.\n\nLos talleres cubrirán temas como producción de podcasts, uso de redes sociales para medios, técnicas de entrevista, y ética en el periodismo digital. Serán impartidos por profesionales reconocidos en el campo de la comunicación y estarán disponibles de forma gratuita para toda la comunidad."
     },
     {
       id: 5,
-      titulo: "RadioUpea lanza nueva iniciativa comunitaria",
+      titulo: "Radio UPEA amplía su cobertura",
       imagen: "https://i.blogs.es/c7b68e/chatgpt-studio-ghibli-portada/500_333.jpeg",
-      descripcion: "Radio UPEA ha lanzado una nueva iniciativa comunitaria que busca conectar a los estudiantes con la comunidad local a través de programas educativos y culturales.",
-      fechaCompleta: "2 de Agosto, 2025",
-      contenidoCompleto: "Esta nueva iniciativa de Radio UPEA representa un paso importante en el fortalecimiento de los lazos entre la universidad y la comunidad. El programa incluye espacios dedicados a la música local, entrevistas con líderes comunitarios, y segmentos educativos que abordan temas de interés general.\n\nLa directora de Radio UPEA, María González, explicó que 'queremos ser un puente entre el conocimiento académico y las necesidades reales de nuestra comunidad'. El proyecto contará con la participación de estudiantes de diferentes carreras que podrán aplicar sus conocimientos en un entorno real.\n\nLos programas se transmitirán de lunes a viernes en horarios estratégicos para llegar al mayor número de oyentes posible."
+      descripcion: "La emisora universitaria anuncia la ampliación de su cobertura para llegar a más comunidades rurales de la región.",
+      fechaCompleta: "29 de Julio, 2025",
+      contenidoCompleto: "Radio UPEA ha anunciado oficialmente la ampliación de su cobertura radiofónica, lo que permitirá llegar a comunidades rurales que anteriormente no tenían acceso a nuestra programación. Esta expansión es resultado de una inversión en nueva infraestructura y equipos de transmisión.\n\nLa ampliación incluye la instalación de repetidoras estratégicamente ubicadas y el fortalecimiento de la señal digital. Con esta mejora, Radio UPEA podrá cumplir mejor su misión de servir como medio de comunicación educativo y cultural para toda la región, llevando información, entretenimiento y educación a las comunidades más alejadas."
     },
-    // ... más noticias aquí ...
   ];
 
   const handleNewsPress = (noticia: Noticia): void => {
@@ -86,49 +85,81 @@ const GaleriaScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
+      <StatusBar barStyle="dark-content" backgroundColor="#f8f9fa" />
 
-      {/* Header limpio */}
+      {/* Header mejorado */}
       <View style={styles.header}>
-        <Text style={styles.title}>Galería - radio UPEA</Text>
+        <View style={styles.headerLeft}>
+          <Text style={styles.title}>Programas</Text>
+          <Text style={styles.subtitle}>Radio UPEA</Text>
+        </View>
         
-        <View style={styles.rightHeader}>
+        <View style={styles.headerRight}>
           <View style={styles.liveIndicator}>
             <View style={styles.liveCircle} />
             <Text style={styles.liveText}>LIVE</Text>
           </View>
 
           <TouchableOpacity style={styles.refreshButton} onPress={handleRefresh}>
-            <Ionicons name="refresh" size={24} color="#000" />
+            <Ionicons name="refresh" size={20} color="#666" />
           </TouchableOpacity>
         </View>
       </View>
 
       {/* Lista de Noticias */}
-      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-        {noticias.map((noticia: Noticia) => (
+      <ScrollView 
+        style={styles.scrollView} 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {noticias.map((noticia: Noticia, index: number) => (
           <TouchableOpacity
             key={noticia.id}
-            style={styles.newsCard}
+            style={[
+              styles.newsCard,
+              index === 0 && styles.featuredCard
+            ]}
             onPress={() => handleNewsPress(noticia)}
             activeOpacity={0.8}
           >
+            <Image 
+              source={{ uri: noticia.imagen }} 
+              style={[
+                styles.newsImage, 
+                index === 0 && styles.featuredImage
+              ]}
+              resizeMode="cover"
+            />
+            
             <View style={styles.cardContent}>
-              <View style={styles.textContent}>
+              <View style={styles.cardHeader}>
                 <Text style={styles.newsCategory}>Noticias</Text>
-                <Text style={styles.newsTitle}>{noticia.titulo}</Text>
+                <Text style={styles.newsDate}>
+                  {noticia.fechaCompleta.split(',')[0]}
+                </Text>
               </View>
-              <Image 
-                source={{ uri: noticia.imagen }} 
-                style={styles.newsImage}
-                resizeMode="cover"
-              />
+              
+              <Text style={[
+                styles.newsTitle,
+                index === 0 && styles.featuredTitle
+              ]} numberOfLines={2}>
+                {noticia.titulo}
+              </Text>
+              
+              <Text style={styles.newsDescription} numberOfLines={3}>
+                {noticia.descripcion}
+              </Text>
+              
+              <TouchableOpacity style={styles.readMoreButton}>
+                <Text style={styles.readMoreText}>Leer más</Text>
+                <Ionicons name="arrow-forward" size={14} color="#007AFF" />
+              </TouchableOpacity>
             </View>
           </TouchableOpacity>
         ))}
       </ScrollView>
 
-      {/* Modal de Información */}
+      {/* Modal mejorado */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -144,12 +175,17 @@ const GaleriaScreen: React.FC = () => {
               >
                 <Ionicons name="close" size={24} color="#666" />
               </TouchableOpacity>
-              <Text style={styles.modalHeaderTitle}>Más información</Text>
-              <View style={{ width: 24 }} />
+              <Text style={styles.modalHeaderTitle}>Noticia completa</Text>
+              <TouchableOpacity style={styles.shareButton}>
+                <Ionicons name="share-outline" size={20} color="#666" />
+              </TouchableOpacity>
             </View>
             
             {selectedNews && (
-              <ScrollView style={styles.modalBody} showsVerticalScrollIndicator={false}>
+              <ScrollView 
+                style={styles.modalBody} 
+                showsVerticalScrollIndicator={false}
+              >
                 <Image 
                   source={{ uri: selectedNews.imagen }} 
                   style={styles.modalImage}
@@ -157,10 +193,18 @@ const GaleriaScreen: React.FC = () => {
                 />
                 
                 <View style={styles.modalTextContent}>
-                  <Text style={styles.modalCategory}>Noticias</Text>
+                  <View style={styles.modalMeta}>
+                    <Text style={styles.modalCategory}>Noticias</Text>
+                    <Text style={styles.modalDate}>{selectedNews.fechaCompleta}</Text>
+                  </View>
+                  
                   <Text style={styles.modalTitle}>{selectedNews.titulo}</Text>
-                  <Text style={styles.modalDate}>{selectedNews.fechaCompleta}</Text>
-                  <Text style={styles.modalDescription}>{selectedNews.contenidoCompleto}</Text>
+                  
+                  <View style={styles.divider} />
+                  
+                  <Text style={styles.modalDescription}>
+                    {selectedNews.contenidoCompleto}
+                  </Text>
                 </View>
               </ScrollView>
             )}
@@ -174,7 +218,7 @@ const GaleriaScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#f8f9fa',
   },
   header: {
     flexDirection: 'row',
@@ -182,94 +226,153 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 15,
-    paddingTop: 45,
+    paddingTop: 60,
+    backgroundColor: 'transparent',
   },
-  rightHeader: {
+  headerLeft: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 2,
+  },
+  subtitle: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#666',
+  },
+  headerRight: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  refreshButton: {
-    padding: 8,
-    marginLeft: 12,
+    gap: 10,
   },
   liveIndicator: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FF4444',
-    paddingHorizontal: 12,
+    paddingHorizontal: 10,
     paddingVertical: 6,
-    borderRadius: 20,
+    borderRadius: 16,
   },
   liveCircle: {
     width: 6,
     height: 6,
     borderRadius: 3,
     backgroundColor: '#FFFFFF',
-    marginRight: 6,
+    marginRight: 5,
   },
   liveText: {
     color: '#FFFFFF',
-    fontSize: 12,
-    fontWeight: 'bold',
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 0.5,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  scrollView: {
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-  newsCard: {
-    backgroundColor: '#1E3A8A',
-    borderRadius: 12,
-    marginBottom: 15,
-    padding: 20,
-    elevation: 3,
+  refreshButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.1,
-    shadowRadius: 3.84,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+  },
+  newsCard: {
+    backgroundColor: 'white',
+    borderRadius: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5,
+    overflow: 'hidden',
+  },
+  featuredCard: {
+    marginBottom: 20,
+  },
+  newsImage: {
+    width: '100%',
+    height: 160,
+  },
+  featuredImage: {
+    height: 200,
   },
   cardContent: {
+    padding: 16,
+  },
+  cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-  },
-  textContent: {
-    flex: 1,
-    marginRight: 15,
-  },
-  newsCategory: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '500',
     marginBottom: 8,
   },
-  newsTitle: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-    lineHeight: 22,
+  newsCategory: {
+    color: '#007AFF',
+    fontSize: 12,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
-  newsImage: {
-    width: 80,
-    height: 60,
-    borderRadius: 8,
+  newsDate: {
+    color: '#999',
+    fontSize: 12,
+    fontWeight: '500',
+  },
+  newsTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#333',
+    lineHeight: 22,
+    marginBottom: 8,
+  },
+  featuredTitle: {
+    fontSize: 20,
+    lineHeight: 26,
+  },
+  newsDescription: {
+    fontSize: 14,
+    color: '#666',
+    lineHeight: 20,
+    marginBottom: 12,
+  },
+  readMoreButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+  },
+  readMoreText: {
+    color: '#007AFF',
+    fontSize: 14,
+    fontWeight: '600',
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     justifyContent: 'flex-end',
   },
   modalContent: {
     backgroundColor: '#FFFFFF',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
     maxHeight: '90%',
     minHeight: '60%',
   },
@@ -278,50 +381,76 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E5E5E5',
+    paddingVertical: 16,
+    backgroundColor: '#f8f9fa',
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
   },
   modalCloseButton: {
-    padding: 4,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalHeaderTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#000',
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+  },
+  shareButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalBody: {
     flex: 1,
   },
   modalImage: {
     width: '100%',
-    height: 200,
+    height: 240,
   },
   modalTextContent: {
     padding: 20,
   },
-  modalCategory: {
-    color: '#1E3A8A',
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 8,
+  modalMeta: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
   },
-  modalTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#000',
-    marginBottom: 10,
-    lineHeight: 28,
+  modalCategory: {
+    color: '#007AFF',
+    fontSize: 12,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   modalDate: {
     fontSize: 14,
     color: '#666',
-    marginBottom: 15,
+    fontWeight: '500',
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#333',
+    lineHeight: 32,
+    marginBottom: 16,
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#f0f0f0',
+    marginBottom: 16,
   },
   modalDescription: {
     fontSize: 16,
-    color: '#333',
-    lineHeight: 24,
+    color: '#444',
+    lineHeight: 26,
   },
 });
 

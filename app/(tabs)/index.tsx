@@ -8,8 +8,7 @@ import {
   SafeAreaView,
   Dimensions,
   ImageBackground,
-  Animated,
-  Share
+  Animated
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialIcons, Feather } from '@expo/vector-icons';
@@ -59,54 +58,24 @@ const RadioScreen = () => {
 
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying);
-    console.log(isPlaying ? 'Pausando radio...' : 'Reproduciendo radio...');
-    // Aquí puedes agregar la lógica para conectar/desconectar el stream de audio
   };
 
   const toggleMute = () => {
     setIsMuted(!isMuted);
-    console.log(isMuted ? 'Audio activado' : 'Audio silenciado');
-    // Aquí puedes agregar la lógica para silenciar/activar el audio
   };
 
   const toggleLike = () => {
     setIsLiked(!isLiked);
-    console.log(isLiked ? 'Like removido' : 'Like agregado');
-    // Aquí puedes agregar la lógica para guardar el like en preferencias
   };
 
-  const handleShare = async () => {
-    try {
-      const result = await Share.share({
-        message: '¡Escucha Radio UPEA en vivo! Tu radio favorita en línea - FM 100.0',
-        title: 'Radio UPEA',
-        url: 'https://radioupea.com', // Reemplaza con tu URL real
-      });
-
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          console.log('Compartido via:', result.activityType);
-        } else {
-          console.log('Compartido exitosamente');
-        }
-      } else if (result.action === Share.dismissedAction) {
-        console.log('Compartir cancelado');
-      }
-    } catch (error) {
-      console.error('Error al compartir:', error);
-    }
-  };
-
-  // Usar los valores animados para el visualizador
-  const audioLevels = animationValues.map((animValue, index) => ({
-    animValue,
-    staticHeight: [4, 8, 6, 12, 10, 15, 8, 18, 14, 20, 16, 22, 12, 25, 18, 28, 20, 24, 16, 30,
-      26, 22, 18, 14, 10, 16, 20, 24, 18, 12, 8, 6, 10, 14, 18, 22, 16, 12, 8, 4][index] || 4
-  }));
+  const audioLevels = [
+    4, 8, 6, 12, 10, 15, 8, 18, 14, 20, 16, 22, 12, 25, 18, 28, 20, 24, 16, 30,
+    26, 22, 18, 14, 10, 16, 20, 24, 18, 12, 8, 6, 10, 14, 18, 22, 16, 12, 8, 4
+  ];
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+      <StatusBar barStyle="dark-content" backgroundColor="#f8f9fa" />
 
       {/* Header */}
       <View style={styles.header}>
@@ -114,108 +83,108 @@ const RadioScreen = () => {
           <View style={styles.liveIndicator} />
           <Text style={styles.liveText}>LIVE</Text>
         </View>
-        <TouchableOpacity onPress={handleShare} activeOpacity={0.7}>
-          <Feather name="share" size={24} color="#333" />
+        <TouchableOpacity style={styles.shareButton}>
+          <Feather name="share" size={22} color="#666" />
         </TouchableOpacity>
       </View>
 
-      {/* Main Card */}
-      <View style={styles.cardContainer}>
-        <ImageBackground
-          source={require('../../assets/images/radioupea.png')}
-          style={styles.card}
-          imageStyle={{ borderRadius: 15 }}
-          resizeMode="cover"
-        >
-          {/* Sound waves */}
-          <View style={styles.soundWaves}>
-            {[...Array(5)].map((_, i) => (
-              <View
-                key={i}
+      {/* Main Content Card */}
+      <View style={styles.mainCard}>
+        {/* Radio Image */}
+        <View style={styles.cardContainer}>
+          <ImageBackground
+            source={require('../../assets/images/radioupea.png')}
+            style={styles.card}
+            imageStyle={{ borderRadius: 20 }}
+            resizeMode="cover"
+          >
+            {/* Sound waves */}
+            <View style={styles.soundWaves}>
+              {[...Array(4)].map((_, i) => (
+                <View
+                  key={i}
+                  style={[
+                    styles.soundWave,
+                    {
+                      width: 80 + i * 30,
+                      height: 80 + i * 30,
+                      opacity: isPlaying ? 0.4 - i * 0.08 : 0.1,
+                    }
+                  ]}
+                />
+              ))}
+            </View>
+          </ImageBackground>
+        </View>
+
+        {/* Live Badge */}
+        <View style={styles.liveBadge}>
+          <Text style={styles.liveBadgeText}>EN VIVO</Text>
+        </View>
+
+        {/* Station Info */}
+        <View style={styles.stationInfo}>
+          <Text style={styles.stationName}>Radio UPEA</Text>
+          <Text style={styles.frequency}>FM 100.0</Text>
+        </View>
+
+        {/* Controls */}
+        <View style={styles.controlsContainer}>
+          <TouchableOpacity 
+            style={[styles.controlButton, isMuted && styles.controlButtonActive]}
+            onPress={toggleMute}
+          >
+            <MaterialIcons 
+              name={isMuted ? "volume-off" : "volume-up"} 
+              size={24} 
+              color={isMuted ? "#fff" : "#666"} 
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.playButton}
+            onPress={togglePlayPause}
+          >
+            <Ionicons 
+              name={isPlaying ? "pause" : "play"} 
+              size={28} 
+              color="white"
+              style={!isPlaying && { marginLeft: 3 }}
+            />
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={[styles.controlButton, isLiked && styles.controlButtonActive]}
+            onPress={toggleLike}
+          >
+            <MaterialIcons 
+              name={isLiked ? "thumb-up" : "thumb-up-off-alt"} 
+              size={24} 
+              color={isLiked ? "#fff" : "#666"} 
+            />
+          </TouchableOpacity>
+        </View>
+
+        {/* Audio Visualizer */}
+        <View style={styles.visualizerContainer}>
+          <Text style={styles.visualizerLabel}>Ecualizador</Text>
+          <View style={styles.visualizer}>
+            {audioLevels.map((level, index) => (
+              <Animated.View
+                key={index}
                 style={[
-                  styles.soundWave,
+                  styles.audioBar,
                   {
-                    width: 60 + i * 20,
-                    height: 60 + i * 20,
-                    opacity: isPlaying ? 0.3 - i * 0.05 : 0.1,
+                    height: isPlaying ? animationValues[index] : 4,
+                    backgroundColor: isPlaying 
+                      ? `hsl(${200 + (index * 3) % 60}, 70%, 60%)` 
+                      : '#e0e0e0',
                   }
                 ]}
               />
             ))}
           </View>
-        </ImageBackground>
-      </View>
-
-      {/* Live Badge */}
-      <View style={styles.liveBadge}>
-        <Text style={styles.liveBadgeText}>LIVE</Text>
-      </View>
-
-      {/* Controls */}
-      <View style={styles.controls}>
-        <TouchableOpacity 
-          style={[
-            styles.controlButton,
-            isMuted && { backgroundColor: '#FF4444' }
-          ]}
-          onPress={toggleMute}
-          activeOpacity={0.7}
-        >
-          <MaterialIcons 
-            name={isMuted ? "volume-off" : "volume-up"} 
-            size={28} 
-            color={isMuted ? "white" : "#333"} 
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={styles.playButton}
-          onPress={togglePlayPause}
-          activeOpacity={0.8}
-        >
-          <Ionicons 
-            name={isPlaying ? "pause" : "play"} 
-            size={32} 
-            color="white"
-            style={!isPlaying && { paddingLeft: 4 }}
-          />
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={[
-            styles.controlButton,
-            isLiked && { backgroundColor: '#FF4444' }
-          ]}
-          onPress={toggleLike}
-          activeOpacity={0.7}
-        >
-          <MaterialIcons 
-            name={isLiked ? "thumb-up" : "thumb-up-off-alt"} 
-            size={28} 
-            color={isLiked ? "white" : "#333"} 
-          />
-        </TouchableOpacity>
-      </View>
-
-      {/* Frequency Display */}
-      <Text style={styles.frequency}>FM 100.0</Text>
-
-      {/* Audio Visualizer */}
-      <View style={styles.visualizer}>
-        {audioLevels.map((item, index) => (
-          <Animated.View
-            key={index}
-            style={[
-              styles.audioBar,
-              {
-                height: isPlaying ? item.animValue : item.staticHeight,
-                backgroundColor: isPlaying 
-                  ? `hsl(${(index * 9) % 360}, 70%, 60%)`
-                  : '#e0e0e0',
-              }
-            ]}
-          />
-        ))}
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -224,155 +193,146 @@ const RadioScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#f8f9fa',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingTop: 45,
-    paddingBottom: -5,
+    paddingTop: 60,
+    paddingBottom: 10,
+    backgroundColor: 'transparent',
   },
   liveContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: 'white',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   liveIndicator: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
+    width: 8,
+    height: 8,
+    borderRadius: 4,
     backgroundColor: '#FF4444',
-    marginRight: 8,
+    marginRight: 6,
   },
   liveText: {
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 12,
+    fontWeight: '600',
     color: '#333',
   },
+  shareButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  mainCard: {
+    backgroundColor: 'white',
+    marginHorizontal: 20,
+    marginTop: 10,
+    borderRadius: 24,
+    paddingVertical: 30,
+    paddingHorizontal: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 8,
+  },
   cardContainer: {
-    marginHorizontal: 40,
-    marginBottom: 0,
-    marginTop: 40,
-    padding: 16,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 20,
   },
   card: {
-    width: 300,
-    height: 300,
-    padding: 50,
-    borderRadius: 24,
+    width: 200,
+    height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
     overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  radioTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 20,
-    textAlign: 'center',
-    letterSpacing: 2,
-  },
-  microphonesContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'center',
-    gap: 20,
-  },
-  microphoneWrapper: {
-    alignItems: 'center',
-  },
-  classicMic: {
-    alignItems: 'center',
-  },
-  micTop: {
-    width: 30,
-    height: 40,
-    backgroundColor: '#E0E0E0',
-    borderRadius: 15,
-    borderWidth: 2,
-    borderColor: '#BDBDBD',
-  },
-  micBody: {
-    width: 24,
-    height: 60,
-    backgroundColor: '#F5F5F5',
-    marginTop: -5,
-  },
-  micStand: {
-    width: 3,
-    height: 30,
-    backgroundColor: '#757575',
-  },
-  micBase: {
-    width: 20,
-    height: 8,
-    backgroundColor: '#424242',
-    borderRadius: 4,
-  },
-  modernMic: {
-    alignItems: 'center',
-  },
-  modernMicBody: {
-    width: 25,
-    height: 80,
-    borderRadius: 12,
-  },
-  modernMicMesh: {
-    position: 'absolute',
-    top: 10,
-    width: 20,
-    height: 50,
-    backgroundColor: '#666',
-    borderRadius: 10,
-    opacity: 0.7,
   },
   soundWaves: {
     position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: [{ translateX: -50 }, { translateY: -50 }],
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   soundWave: {
     position: 'absolute',
     borderRadius: 999,
     borderWidth: 2,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
-    top: '50%',
-    left: '50%',
-    transform: [{ translateX: -0.5 }, { translateY: -0.5 }],
+    borderColor: 'rgba(255, 255, 255, 0.6)',
   },
   liveBadge: {
     backgroundColor: '#FF4444',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
-    alignSelf: 'flex-end',
-    marginRight: 50,
-    marginTop: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 15,
+    alignSelf: 'center',
     marginBottom: 20,
   },
   liveBadgeText: {
     color: 'white',
-    fontSize: 12,
-    fontWeight: 'bold',
+    fontSize: 11,
+    fontWeight: '700',
+    letterSpacing: 0.5,
   },
-  controls: {
+  stationInfo: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  stationName: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#333',
+    marginBottom: 5,
+  },
+  frequency: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#666',
+  },
+  controlsContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 30,
-    gap: 40,
+    gap: 30,
   },
   controlButton: {
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#f5f5f5',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  controlButtonActive: {
+    backgroundColor: '#003070',
   },
   playButton: {
     width: 70,
@@ -381,34 +341,35 @@ const styles = StyleSheet.create({
     backgroundColor: '#003070',
     justifyContent: 'center',
     alignItems: 'center',
+    shadowColor: '#003070',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 6,
   },
-  frequency: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    textAlign: 'center',
-    marginBottom: 20,
+  visualizerContainer: {
+    alignItems: 'center',
+  },
+  visualizerLabel: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#666',
+    marginBottom: 15,
   },
   visualizer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-end',
-    height: 60,
-    marginHorizontal: 20,
-    marginBottom: 30,
+    height: 40,
     gap: 2,
   },
   audioBar: {
-    width: 4,
+    width: 3,
     borderRadius: 2,
     minHeight: 4,
-  },
-  cardOverlay: {
-    flex: 1,
-    padding: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
   },
 });
 
