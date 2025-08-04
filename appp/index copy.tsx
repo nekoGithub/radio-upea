@@ -8,7 +8,8 @@ import {
   SafeAreaView,
   Dimensions,
   ImageBackground,
-  Animated
+  Animated,
+  Share
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialIcons, Feather } from '@expo/vector-icons';
@@ -68,6 +69,28 @@ const RadioScreen = () => {
     setIsLiked(!isLiked);
   };
 
+  const handleShare = async () => {
+      try {
+        const result = await Share.share({
+          message: '¡Escucha Radio UPEA en vivo! Tu radio favorita en línea - FM 100.0',
+          title: 'Radio UPEA',
+          url: 'https://radioupea.com', // Reemplaza con tu URL real
+        });
+  
+        if (result.action === Share.sharedAction) {
+          if (result.activityType) {
+            console.log('Compartido via:', result.activityType);
+          } else {
+            console.log('Compartido exitosamente');
+          }
+        } else if (result.action === Share.dismissedAction) {
+          console.log('Compartir cancelado');
+        }
+      } catch (error) {
+        console.error('Error al compartir:', error);
+      }
+    };
+
   const audioLevels = [
     4, 8, 6, 12, 10, 15, 8, 18, 14, 20, 16, 22, 12, 25, 18, 28, 20, 24, 16, 30,
     26, 22, 18, 14, 10, 16, 20, 24, 18, 12, 8, 6, 10, 14, 18, 22, 16, 12, 8, 4
@@ -83,8 +106,8 @@ const RadioScreen = () => {
           <View style={styles.liveIndicator} />
           <Text style={styles.liveText}>LIVE</Text>
         </View>
-        <TouchableOpacity style={styles.shareButton}>
-          <Feather name="share" size={22} color="#666" />
+        <TouchableOpacity onPress={handleShare} activeOpacity={0.7}>
+          <Feather name="share" size={24} color="#333" />
         </TouchableOpacity>
       </View>
 
