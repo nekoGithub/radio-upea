@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: 20,
-    paddingTop: 60,
+    paddingVertical: "10%",
     paddingBottom: 20,
     backgroundColor: 'transparent',
   },

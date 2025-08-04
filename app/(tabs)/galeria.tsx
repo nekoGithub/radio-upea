@@ -225,8 +225,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 15,
-    paddingTop: 60,
+    paddingVertical: "10%",
     backgroundColor: 'transparent',
   },
   headerLeft: {
