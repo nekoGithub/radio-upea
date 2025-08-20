@@ -9,10 +9,12 @@ import {
   Dimensions,
   ImageBackground,
   Animated,
-  Share
+  Share,
+  Alert
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons, MaterialIcons, Feather } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
 
 const { width } = Dimensions.get('window');
 
@@ -20,18 +22,48 @@ const RadioScreen = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [sound, setSound] = useState<any>(null);
   const [animationValues] = useState(
     Array.from({ length: 40 }, () => new Animated.Value(Math.random() * 30 + 4))
   );
+
+  // Stream URL
+  const STREAM_URL = 'https://tvstream.upea.bo/hls/oSs0jSWumTFIIVY97559.m3u8';
+
+  // Configurar Audio al montar el componente
+  useEffect(() => {
+    setupAudio();
+    return () => {
+      if (sound) {
+        sound.unloadAsync();
+      }
+    };
+  }, [sound]);
+
+  const setupAudio = async () => {
+    try {
+      // Configurar el modo de audio para reproducción
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        staysActiveInBackground: true,
+        playsInSilentModeIOS: true,
+        shouldDuckAndroid: true,
+        playThroughEarpieceAndroid: false
+      });
+    } catch (error) {
+      console.error('Error setting up audio:', error);
+    }
+  };
 
   // Función para generar nuevas alturas aleatorias
   const generateRandomHeight = () => Math.random() * 25 + 4;
 
   // Animación del visualizador
   useEffect(() => {
-    let interval: number | null = null;
+    let interval = null;
 
-    if (isPlaying) {
+    if (isPlaying && !isLoading) {
       interval = setInterval(() => {
         animationValues.forEach((animValue, index) => {
           Animated.timing(animValue, {
@@ -55,14 +87,77 @@ const RadioScreen = () => {
     return () => {
       if (interval) clearInterval(interval);
     };
-  }, [isPlaying]);
+  }, [isPlaying, isLoading]);
 
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
+  const togglePlayPause = async () => {
+    try {
+      setIsLoading(true);
+      
+      if (sound && isPlaying) {
+        // Pausar
+        await sound.pauseAsync();
+        setIsPlaying(false);
+      } else if (sound && !isPlaying) {
+        // Reanudar
+        await sound.playAsync();
+        setIsPlaying(true);
+      } else {
+        // Crear nuevo sonido y reproducir
+        const { sound: newSound } = await Audio.Sound.createAsync(
+          { uri: STREAM_URL },
+          { 
+            shouldPlay: true,
+            isLooping: false,
+            volume: isMuted ? 0.0 : 1.0,
+          }
+        );
+        
+        setSound(newSound);
+        setIsPlaying(true);
+
+        // Listener para cuando termine (aunque en streams no debería pasar)
+        newSound.setOnPlaybackStatusUpdate((status: any) => {
+          if (status.isLoaded) {
+            setIsLoading(false);
+            if (status.didJustFinish) {
+              setIsPlaying(false);
+            }
+            if (status.error) {
+              console.error('Playback error:', status.error);
+              setIsPlaying(false);
+              Alert.alert(
+                'Error de conexión',
+                'No se pudo conectar con la radio. Verifica tu conexión a internet.',
+                [{ text: 'OK' }]
+              );
+            }
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Error toggling playback:', error);
+      setIsLoading(false);
+      setIsPlaying(false);
+      Alert.alert(
+        'Error',
+        'No se pudo conectar con la radio. Verifica tu conexión a internet o intenta más tarde.',
+        [{ text: 'OK' }]
+      );
+    } finally {
+      setTimeout(() => setIsLoading(false), 1000);
+    }
   };
 
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
+  const toggleMute = async () => {
+    try {
+      if (sound) {
+        const newVolume = isMuted ? 1.0 : 0.0;
+        await sound.setVolumeAsync(newVolume);
+        setIsMuted(!isMuted);
+      }
+    } catch (error) {
+      console.error('Error toggling mute:', error);
+    }
   };
 
   const toggleLike = () => {
@@ -70,27 +165,48 @@ const RadioScreen = () => {
   };
 
   const handleShare = async () => {
-  try {
-    const message = `📻 ¡Escucha Radio UPEA en vivo! 🎶\nTu radio favorita en línea - FM 100.0\n🔗 https://fm100.upea.bo/`;
+    try {
+      const message = `📻 ¡Escucha Radio UPEA en vivo! 🎶\nTu radio favorita en línea - FM 100.0\n🔗 https://fm100.upea.bo/`;
 
-    const result = await Share.share({
-      message: message,
-      title: 'Radio UPEA',
-    });
+      const result = await Share.share({
+        message: message,
+        title: 'Radio UPEA',
+      });
 
-    if (result.action === Share.sharedAction) {
-      if (result.activityType) {
-        console.log('Compartido vía:', result.activityType);
-      } else {
-        console.log('Compartido exitosamente');
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          console.log('Compartido vía:', result.activityType);
+        } else {
+          console.log('Compartido exitosamente');
+        }
+      } else if (result.action === Share.dismissedAction) {
+        console.log('Compartir cancelado');
       }
-    } else if (result.action === Share.dismissedAction) {
-      console.log('Compartir cancelado');
+    } catch (error) {
+      console.error('Error al compartir:', error);
     }
-  } catch (error) {
-    console.error('Error al compartir:', error);
-  }
-};
+  };
+
+  const getPlayButtonContent = () => {
+    if (isLoading) {
+      return (
+        <View style={styles.loadingContainer}>
+          <Animated.View style={[styles.loadingDot, styles.loadingAnimation]} />
+          <Animated.View style={[styles.loadingDot, styles.loadingAnimation, { opacity: 0.7 }]} />
+          <Animated.View style={[styles.loadingDot, styles.loadingAnimation, { opacity: 0.4 }]} />
+        </View>
+      );
+    }
+    
+    return (
+      <Ionicons 
+        name={isPlaying ? "pause" : "play"} 
+        size={28} 
+        color="white"
+        style={!isPlaying && { marginLeft: 3 }}
+      />
+    );
+  };
 
   const audioLevels = [
     4, 8, 6, 12, 10, 15, 8, 18, 14, 20, 16, 22, 12, 25, 18, 28, 20, 24, 16, 30,
@@ -104,8 +220,12 @@ const RadioScreen = () => {
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.liveContainer}>
-          <View style={styles.liveIndicator} />
-          <Text style={styles.liveText}>LIVE</Text>
+          <View style={[styles.liveIndicator, { 
+            backgroundColor: isPlaying ? '#FF4444' : '#ccc' 
+          }]} />
+          <Text style={styles.liveText}>
+            {isPlaying ? 'LIVE' : 'OFFLINE'}
+          </Text>
         </View>
         <TouchableOpacity onPress={handleShare} activeOpacity={0.7}>
           <Feather name="share" size={24} color="#333" />
@@ -142,8 +262,12 @@ const RadioScreen = () => {
         </View>
 
         {/* Live Badge */}
-        <View style={styles.liveBadge}>
-          <Text style={styles.liveBadgeText}>EN VIVO</Text>
+        <View style={[styles.liveBadge, {
+          backgroundColor: isPlaying ? '#FF4444' : '#999'
+        }]}>
+          <Text style={styles.liveBadgeText}>
+            {isLoading ? 'CONECTANDO...' : isPlaying ? 'EN VIVO' : 'DETENIDO'}
+          </Text>
         </View>
 
         {/* Station Info */}
@@ -157,6 +281,7 @@ const RadioScreen = () => {
           <TouchableOpacity 
             style={[styles.controlButton, isMuted && styles.controlButtonActive]}
             onPress={toggleMute}
+            disabled={!sound}
           >
             <MaterialIcons 
               name={isMuted ? "volume-off" : "volume-up"} 
@@ -166,15 +291,11 @@ const RadioScreen = () => {
           </TouchableOpacity>
 
           <TouchableOpacity 
-            style={styles.playButton}
+            style={[styles.playButton, isLoading && styles.playButtonLoading]}
             onPress={togglePlayPause}
+            disabled={isLoading}
           >
-            <Ionicons 
-              name={isPlaying ? "pause" : "play"} 
-              size={28} 
-              color="white"
-              style={!isPlaying && { marginLeft: 3 }}
-            />
+            {getPlayButtonContent()}
           </TouchableOpacity>
 
           <TouchableOpacity 
@@ -191,7 +312,9 @@ const RadioScreen = () => {
 
         {/* Audio Visualizer */}
         <View style={styles.visualizerContainer}>
-          <Text style={styles.visualizerLabel}>Ecualizador</Text>
+          <Text style={styles.visualizerLabel}>
+            {isLoading ? 'Conectando...' : 'Ecualizador'}
+          </Text>
           <View style={styles.visualizer}>
             {audioLevels.map((level, index) => (
               <Animated.View
@@ -199,8 +322,8 @@ const RadioScreen = () => {
                 style={[
                   styles.audioBar,
                   {
-                    height: isPlaying ? animationValues[index] : 4,
-                    backgroundColor: isPlaying 
+                    height: (isPlaying && !isLoading) ? animationValues[index] : 4,
+                    backgroundColor: (isPlaying && !isLoading) 
                       ? `hsl(${200 + (index * 3) % 60}, 70%, 60%)` 
                       : '#e0e0e0',
                   }
@@ -248,29 +371,12 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#FF4444',
     marginRight: 6,
   },
   liveText: {
     fontSize: 12,
     fontWeight: '600',
     color: '#333',
-  },
-  shareButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
   },
   mainCard: {
     backgroundColor: 'white',
@@ -312,7 +418,6 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255, 255, 255, 0.6)',
   },
   liveBadge: {
-    backgroundColor: '#FF4444',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 15,
@@ -373,6 +478,24 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 6,
+  },
+  playButtonLoading: {
+    backgroundColor: '#555',
+  },
+  loadingContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: 'white',
+    marginHorizontal: 2,
+  },
+  loadingAnimation: {
+    opacity: 0.4,
   },
   visualizerContainer: {
     alignItems: 'center',
